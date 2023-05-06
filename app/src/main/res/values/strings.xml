@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">CardsWar</string>
+    <string name="reset">RESET</string>
+    <string name="play">PLAY</string>
+    <string name="player">"Player: "</string>
+    <string name="device">"Device: "</string>
+</resources>
