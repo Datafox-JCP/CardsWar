@@ -39,7 +39,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import mx.datafox.cardswar.ui.theme.CardsWarTheme
-import kotlin.random.Random
 
 class MainActivity : ComponentActivity() {
 
@@ -68,9 +67,8 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("DiscouragedApi")
 @Composable
 fun GamePlay() {
-    val context = LocalContext.current
-    val mediaPlayerSpin = MediaPlayer.create(context, R.raw.spin)
-
+    var playerScore by remember { mutableStateOf(0) }
+    var cpuScore by remember { mutableStateOf(0) }
     var playerCard by remember { mutableStateOf(13) }
     var cpuCard by remember { mutableStateOf(13) }
 
@@ -89,7 +87,6 @@ fun GamePlay() {
         12 -> R.drawable.card13
         else -> R.drawable.card14
     }
-
     val cpuImageResource = when (cpuCard) {
         1 -> R.drawable.card2
         2 -> R.drawable.card3
@@ -105,9 +102,8 @@ fun GamePlay() {
         12 -> R.drawable.card13
         else -> R.drawable.card14
     }
-
-    var playerScore by remember { mutableStateOf(0) }
-    var cpuScore by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+    val mediaPlayerSpin = MediaPlayer.create(context, R.raw.spin)
 
     Column{
         Row(modifier = Modifier
@@ -151,7 +147,7 @@ fun GamePlay() {
                 },
                 modifier = Modifier
                     .height(60.dp)
-                    .width(120.dp)
+                    .width(130.dp)
             ) {
                 Text(text = stringResource(R.string.reset))
             }
@@ -160,10 +156,10 @@ fun GamePlay() {
 
             Button(
                 onClick = {
-                    playerCard = Random.nextInt(2, 14)
+                    playerCard = (2..14).random()
                     val playerRandom = playerCard
 
-                    cpuCard = Random.nextInt(2, 14)
+                    cpuCard = (2..14).random()
                     val cpuRandom = cpuCard
 
                     if (playerRandom > cpuRandom) {
@@ -186,7 +182,7 @@ fun GamePlay() {
                 },
                 modifier = Modifier
                     .height(60.dp)
-                    .width(120.dp)
+                    .width(130.dp)
             ) {
                 Text(text = stringResource(R.string.play))
             }
@@ -200,19 +196,19 @@ fun GamePlay() {
             horizontalArrangement = Arrangement.Center
         ) {
             Text(text = stringResource(R.string.player),
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = MaterialTheme.colorScheme.onTertiary,
                 style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "$playerScore",
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = MaterialTheme.colorScheme.onTertiary,
                 style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.width(32.dp))
             Text(text = stringResource(R.string.device),
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = MaterialTheme.colorScheme.onTertiary,
                 style = MaterialTheme.typography.headlineSmall)
             Spacer(modifier = Modifier.width(8.dp))
             Text(text = "$cpuScore",
-                color = MaterialTheme.colorScheme.onTertiaryContainer,
+                color = MaterialTheme.colorScheme.onTertiary,
                 style = MaterialTheme.typography.headlineSmall)
         }
     }
